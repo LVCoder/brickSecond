@@ -1,0 +1,244 @@
+*{ 
+    margin:0; 
+    padding:0; 
+    } 
+	
+body{
+width:99.7%;
+margin-left:auto;
+margin-right:auto;
+margin-top:0;
+margin-bottom:0;
+font-family:Trebuchet MS;
+font-size:16px;
+}
+img,
+embed,
+object,
+video {
+max-width: 100 %;
+}
+#header{
+width:100%;
+margin-top:0;
+padding-top:10px;
+margin-left:auto;
+margin-right:auto;
+background:white;
+text-align:left;
+height:80px;
+background:#8adab5;
+/*background-image:url('../images/sativa1.png');*/
+border:1px solid white;
+}
+#head{
+margin-left:100px;
+padding-top:-100px;
+
+}
+#content{
+width:100%;
+padding-top:50px;
+margin-left:auto;
+margin-right:auto;
+text-align:center;
+/*background-image:url('../images/brickwall.png');*/
+
+
+
+}
+#content img{
+max-width:100%;
+}
+#content h1{
+color:#9e9d9d;
+font-size:40px;
+/*text-shadow: #b2bcc2 1px 0 0px, #b2bcc2 0 1px 0px, #b2bcc2 -1px 0 0px, #b2bcc2 0 -1px 0px;*/
+
+}
+#work-er{
+margin-bottom:30px;
+}
+#content a{
+background:#6477c6;
+color:white;
+text-decoration:none;
+text-align:center;
+padding:10px;
+border-radius:50px;
+padding-bottom:20px;
+}
+form {
+  font-size:1.25em;
+  margin: 1em 1em 1em 2em;
+  width:45%;
+  min-width: 28em;
+  
+  
+}
+
+::-webkit-input-placeholder {
+  color:inherit;
+ 
+}
+
+input:focus::-webkit-input-placeholder {
+  color:transparent;
+  text-shadow:none;
+}
+
+fieldset {
+  padding: 1em 0 1em 1em;
+  border:none;
+  color:#7cb3d6;
+ 
+}
+
+fieldset.main {
+  border-bottom: none;
+ border: none;
+}
+
+fieldset.dop {
+  border-top:none;
+  border-bottom:none;
+}
+
+fieldset.captcha {
+  
+    border-top:none;
+   
+}
+
+fieldset.bottom {
+
+  
+ 
+  padding: 0.6em 0 0.6em 8em;
+}
+
+legend {
+ float:left;
+}
+
+label, input, .correct {
+  
+  
+  display:block;
+  float:left;
+  margin-top:0.7em;
+}
+
+label {
+   
+  clear:left;  
+  width:12em;
+  border:solid 1px transparent
+  
+}
+
+input {
+  text-indent:0.1em;
+ font-size:0.9em;
+  border: 1px solid #e2e3e4;
+  width:50%;
+  min-width: 16em;
+  
+}
+
+.capholder {
+  clear:left;
+  
+  
+}
+.capholder img {
+
+  width:10em;
+  margin-right:0.75em;
+  
+  vertical-align:middle;
+}
+
+input[name=captchacode] {
+  
+  float:none;
+  display:inline-block;
+  
+
+}
+
+#ssubmit {  
+  
+ padding: 1em 0 1em 1em;
+  border:none;
+  display:block;
+  font-size:0.9em;
+  cursor:pointer;
+  margin-left:102px;
+  padding: 0 1.5em;
+ 
+  border:none;
+  
+  color:white;
+  background:#7cb3d6;
+   position:relative;
+   height:50px;
+   width: 300px;
+   margin-bottom:40px;
+}
+
+#ssubmit:before {
+  content:"";
+  
+  position:absolute;
+  height:0.85em;
+  left:3px;
+  right:3px;
+
+  
+  border-radius:none;
+  
+ 
+}
+#ssubmit:hover{
+background-color:#5ea5d2;
+}
+
+
+.correct {
+  
+  color: black;
+  margin-left:0.5em;
+  position:relative;
+  top: -0.35em;
+}
+
+
+.incorrect {
+  
+  color:#e01;
+  display:block;
+  white-space:pre-wrap;
+  margin-top:-1.75em;
+  margin-left:15em;    
+}
+
+.incorrect:before {
+  content:"";
+  display:block;
+ 
+  height:3em;
+  float:left;
+  width:50%;
+  min-width:8.5em;
+ 
+  
+}
+#footer{
+margin:auto;
+text-align:center;
+clear:both;
+margin-bottom:0px;
+
+
+}

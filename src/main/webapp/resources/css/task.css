@@ -1,0 +1,88 @@
+body{
+width:99.7%;
+margin-left:auto;
+margin-right:auto;
+margin-top:0;
+margin-bottom:0;
+font-family:Trebuchet MS;
+}
+img,
+embed,
+object,
+video {
+max-width: 100 %;
+}
+#header{
+width:99.7%%;
+margin-top:0;
+padding-top:10px;
+margin-left:auto;
+margin-right:auto;
+background:white;
+text-align:left;
+height:80px;
+background:#8adab5;
+/*background-image:url('../images/sativa1.png');*/
+border:1px solid white;
+}
+#head{
+margin-left:100px;
+padding-top:-100px;
+
+}
+#footer{
+margin:auto;
+text-align:center;
+clear:both;
+}
+
+#tsk{
+margin-left:70px;
+width:550px;
+float:left;
+margin-top:50px;
+}
+
+#tsk h1{
+font-size:36px;
+color:#8adab5;
+font-weight:normal;
+padding-bottom:10px;
+
+}
+#tsk p{
+font-size:20px;
+color:black;
+padding-top:10px;
+}
+#price{
+float:right;
+color:#e75743;
+}
+#det{
+font-size:25px;
+color:gray;
+padding:3px;
+padding-top:10px;
+}
+#tsk button{
+background:#8adab5;
+color:white;
+font-size:20px;
+margin-top:40px;
+padding:10px 20px;
+display:block;
+text-align:center;
+text-decoration:none;
+width:100%;
+}
+#tsk button:hover{
+background:#85c7a9;
+}
+
+textarea{
+width:100%;
+margin-top:10px;
+height:70px;
+margin-bottom:-42px;
+}
