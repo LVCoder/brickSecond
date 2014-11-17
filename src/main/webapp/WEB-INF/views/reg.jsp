@@ -19,6 +19,30 @@
 <script src="<c:url value="/resources/js/script.js"/>"
 	type="text/javascript"></script>
 <title>Brick| Welcome</title>
+<style type="text/css">
+#result{
+color:red;
+}
+</style>
+<script type="text/javascript">
+function hello(){
+$.ajax({
+	url:"getRandom.htm",
+	success:function(data){
+		
+		$("#result").html(data);
+		
+	},
+	error:function(xhr,status,error){
+		alert(xhr.responseText+status+error)
+	}
+	
+})}
+</script>
+<script type="text/javascript">
+var i = 0;
+i = setInterval(hello,3000);
+</script>
 </head>
 
 <body id="regbody">
@@ -79,6 +103,7 @@
 		</form>
 
 	</div>
+	<div id = "result"></div>
 	<div id="footer">BrickByBrick©2014. All rights reserved.</div>
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="js/script.js" type="text/javascript"></script>
