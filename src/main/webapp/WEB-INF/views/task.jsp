@@ -40,7 +40,7 @@
 
 <a href="/brick/home">Головна</a>
 <a href="avaible">Усі завдання</a>
-<a href="create">Додати завдання</a>
+<a href="create">Додати завдання</a>il.c
 ${editTaskButton}
 	</div>
 	<div id = "result"></div>
