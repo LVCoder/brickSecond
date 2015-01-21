@@ -3,23 +3,17 @@ package com.pmi.brick.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Query;
-
-import javax.swing.*;
-
-import java.sql.SQLException;
-
-import javax.swing.JOptionPane;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pmi.brick.domain.User;
+
+import org.hibernate.Transaction;
 
 @Transactional
 @Repository("userDao")
@@ -34,10 +28,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public void updateUser(User user) {
+		Session session = sessionFactory.getCurrentSession();
+
+		session.update(user);
+
+	}
+
+	@Override
 	public List<User> getUser() {
 		@SuppressWarnings("unchecked")
 		List<User> userlist = sessionFactory.getCurrentSession()
-				.createCriteria(User.class).list();
+		.createCriteria(User.class).list();
 		return userlist;
 	}
 
@@ -48,11 +50,11 @@ public class UserDaoImpl implements UserDao {
 		User user = null;
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List results = cr.list();
+		List<User> results = cr.list();
 		if (results.isEmpty())
 			return "";
 		else
-			password = ((User) results.get(0)).getPassword();
+			password = results.get(0).getPassword();
 		return password;
 	}
 
@@ -60,29 +62,34 @@ public class UserDaoImpl implements UserDao {
 		int id = 0;
 		Session session = null;
 		session = sessionFactory.getCurrentSession();
-		User user = null;
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List results = cr.list();
+		@SuppressWarnings("unchecked")
+		List<User> results = cr.list();
 		if (results.isEmpty())
 			return -1;
 		else
-			id = ((User) results.get(0)).getId();
+			id = results.get(0).getId();
 		return id;
 
 	}
 
 	public User getUserById(int id) {
+		User user = new User();
+
 		Session session = null;
-		session = sessionFactory.getCurrentSession();
-		User user = null;
+
+		session = sessionFactory.openSession();
+
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("id", id));
-		List results = cr.list();
+		List<User> results = cr.list();
+		session.close();
 		if (results.isEmpty())
-			return null;
+			return user;
 		else
-			id = ((User) results.get(0)).getId();
+			user = results.get(0);
+
 		return user;
 
 	}
@@ -98,23 +105,26 @@ public class UserDaoImpl implements UserDao {
 
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List results = cr.list();
+		List<User> results = cr.list();
+		session.close();
 		if (results.isEmpty())
 			return user;
 		else
-			user = (User) results.get(0);
+			user = results.get(0);
 
 		return user;
 	}
 
-	public boolean checkEmail(String email) {
+	public boolean checkEmail(String email) { // return true if email dooes not
+		// exist in Data Base
 		Session session = null;
 
 		session = sessionFactory.openSession();
 
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List results = cr.list();
+		List<User> results = cr.list();
+		session.close();
 		if (results.isEmpty())
 			return true;
 		else

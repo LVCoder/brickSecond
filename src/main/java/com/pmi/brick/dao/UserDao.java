@@ -9,6 +9,7 @@ import com.pmi.brick.domain.User;
 @Component
 public interface UserDao {
 	public void saveUser(User user);
+	public void updateUser(User user);
 
 	public String getUserPassword(String email);
 

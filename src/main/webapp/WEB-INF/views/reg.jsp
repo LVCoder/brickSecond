@@ -24,25 +24,7 @@
 color:red;
 }
 </style>
-<script type="text/javascript">
-function hello(){
-$.ajax({
-	url:"getRandom.htm",
-	success:function(data){
-		
-		$("#result").html(data);
-		
-	},
-	error:function(xhr,status,error){
-		alert(xhr.responseText+status+error)
-	}
-	
-})}
-</script>
-<script type="text/javascript">
-var i = 0;
-i = setInterval(hello,3000);
-</script>
+
 </head>
 
 <body id="regbody">

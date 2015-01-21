@@ -24,7 +24,13 @@ public class UserServiceImpl implements UserService {
 		user.setAuthority("ROLE_USER");
 		userDao.saveUser(user);
 	}
-
+	
+	@Override
+	public void updateUser(User user){
+		userDao.updateUser(user);
+		
+	}
+	
 	@Override
 	public List<User> getUser() {
 		return userDao.getUser();
@@ -49,9 +55,22 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByEmail(email);
 	}
 
-	public boolean checkEmail(String email) {
+	public boolean checkEmail(String email) {            //return true if email doesn`t exist
 
 		return userDao.checkEmail(email);
+	}
+
+	@Override
+	public User getUserById(int id) {
+		return userDao.getUserById(id);
+	}
+
+	@Override
+	public void confirmEmail(User user) {
+		user.setIsEmailConfirm(true);
+		userDao.updateUser(user);
+		
+		
 	}
 
 }

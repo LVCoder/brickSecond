@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,6 +15,12 @@ import javax.persistence.Table;
 @Table(name = "USER")
 public class User {
 
+
+
+	public User(){
+		
+	}
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -45,9 +53,60 @@ public class User {
 	@Column(name="taskCategories")
 	private String taskCategories;
 	
-
+	@Column(name="confirmCode")
+	private String confirmCode;
+	
+	
 	@Column(name="authority")
 	private String authority;
+	
+	@Column(name = "enabled")
+	private boolean enabled;
+	
+	@Column(name = "isEmailConfirm")
+	private boolean isEmailConfirm;
+	
+	@Column(name = "sex")
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
+	
+	public boolean getIsEmailConfirm() {
+		return isEmailConfirm;
+	}
+
+	public void setIsEmailConfirm(boolean isEmailConfirm) {
+		this.isEmailConfirm = isEmailConfirm;
+	}
+	
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public enum Gender {
+	    Male, Female
+	}
+
+	public boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public String getConfirmCode() {
+		return confirmCode;
+	}
+
+	public void setConfirmCode(String confirmCode) {
+		this.confirmCode = confirmCode;
+	}
+
+	
 	
 		public String getCity() {
 		return city;

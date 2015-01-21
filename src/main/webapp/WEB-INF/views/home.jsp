@@ -1,41 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!DOCTYPE HTML >
-
-<html lang="uk">
-<head>
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/stylehome.css" />">
-
-<link rel="shortcut icon" href="<c:url value="/resources/favico.png"/>"
-	type="image/x-icon">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script src="<c:url value="/resources/js/jquery-1.4.3.js"/>"
-	type="text/javascript"></script>
-<script src="<c:url value="/resources/js/jquery-1.7.2.min.js"/>"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="<c:url value="/resources/js/script.js"/>"
-	type="text/javascript"></script>
-<title>Brick| Welcome</title>
-</head>
-
-<body>
-	<div id="header">
-		<form>
-			<input type="text" placeholder="Пошук..." required> <input
-				type="button" value="Знайти">
-		</form>
-		<span id="head"> <a href="/brick"><img
-				src="<c:url value="/resources/images/headerr.png"/>"
-				style="width: 208px; height: 56px;"></a>
+   <%@ page import="com.pmi.brick.domain.User" %>
+    <%@ page import="java.io.*,java.util.*" %>
 
 
-		</span> <a href="j_spring_security_logout">logout </a>
-	</div>
+<% User user=new User();
+user=(User)request.getAttribute("current_user");
+
+%>
+
 
 	<div id="content">
+	${emailConfirmSuccessful}
+	<%if(user.getIsEmailConfirm()==false){ %><h2>Ваш Email не є підтвердженим.</h2><a href="/brick/confirm">Підвердити email</a><%} %>
 		<div id="left">
 
 			<a class="ico" href="home.htm" title="Me"></a> <a class="ico1"
@@ -45,14 +23,14 @@
 
 		</div>
 
-		<div id="right"></div>
+		
 
 		<div id="middle">
 			<div id="ava">
 				<img src="<c:url value="/resources/images/rondo1.jpg"/>">
 
 
-				<p>${current_user.getName()}${current_user.getSurname()}</p>
+				<p><%=user.getName()%>  <%=user.getSurname() %> <%=user.getGender().name() %></p>
 				<div id="stars">
 					<img src="<c:url value="/resources/images/stars.png"/>"> <img
 						src="<c:url value="/resources/images/stars.png"/>"> <img
@@ -66,7 +44,7 @@
 					На сайті: <span> 19 міс</span>
 				</p>
 				<p>
-					Виконаних завдань: <span> 50</span>
+					Виконаних завдань: <span> </span>
 				</p>
 				<p>
 					Рік народження: <span> 1995</span>
@@ -113,11 +91,11 @@
 		</div>
 
 	</div>
-	<div id="footer">BrickByBrick©2014. All rights reserved.</div>
+	
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="<c:url value="/resources/js/script.js"/>"
 		type="text/javascript"></script>
-</body>
+
 <script src="<c:url value="/resources/js/script.js"/>"
 	type="text/javascript"></script>
 

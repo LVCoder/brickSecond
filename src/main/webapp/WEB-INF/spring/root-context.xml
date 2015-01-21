@@ -21,10 +21,11 @@
 	<!-- Определяем папки, в которых будем автоматически искать бины-компоненты (@Component, @Service)  -->
 	<context:component-scan base-package="com.pmi.brick.dao" />
 	<context:component-scan base-package="com.pmi.brick.service" />
-	
+	<context:component-scan base-package="org.techzoo.springtiles.controller" />
 	
 	<!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
 	<import resource="data.xml" />
+	<!-- <import resource="pcm-tiles.xml" />-->
 				
 	
 

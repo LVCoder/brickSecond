@@ -21,10 +21,10 @@
 
 </div>
 <div >
-<a href="/brick/"> <img src="<c:url value="/resources/images/headerReg.png"/>"  id = "regImg" > </a>
+<a href="/brick"> <img src="<c:url value="/resources/images/headerReg.png"/>"  id = "regImg" > </a>
 <span >На жаль ви не маєте прав доступу до цієї сторінки </span>
 
-<a href="/brick/"><span>Повернутись на головну сторінку<span></a>
+<a href="/brick"><span>Повернутись на головну сторінку<span></a>
 
 </div>
 <div id = "footer">
