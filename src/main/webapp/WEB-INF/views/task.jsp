@@ -28,7 +28,7 @@
 <a href="create" >Додати завдання</a>
 ${editTaskButton}
 ${takeTaskButton}
-sdfsdf
+
 	</div>
 
 
