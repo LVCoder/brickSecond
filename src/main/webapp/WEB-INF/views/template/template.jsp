@@ -19,7 +19,7 @@
 		<meta property="og:description" content="<tiles:insertAttribute name="og_desc" ignore="true"/>"/>
 		<link rel="stylesheet" href="<tiles:insertAttribute name="jquery_ui_css" ignore="true"/>" />
 	</head>
-    <body>
+  <body id="regbody">
     	<div id="banner">
 			<tiles:insertAttribute name="header" />
 		</div>

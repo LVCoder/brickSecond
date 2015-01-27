@@ -30,7 +30,7 @@ color:red;
 <body id="regbody">
 
 
-	<div id="headerReg"></div>
+	
 	<div id="left">
 		<a href="/brick"><img
 			src="<c:url value="/resources/images/headerReg.png"/>" id="regImg"></a>
@@ -86,7 +86,7 @@ color:red;
 
 	</div>
 	<div id = "result"></div>
-	<div id="footer">BrickByBrick©2014. All rights reserved.</div>
+	
 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 	<script src="js/script.js" type="text/javascript"></script>
 </body>

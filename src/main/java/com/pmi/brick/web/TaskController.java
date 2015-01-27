@@ -60,6 +60,12 @@ public class TaskController extends MainController {
 		   String editTaskButton = "<a href=\"edit/"+taskId+"\"> Редагувати</a>";
 		   modelAndView.addObject("editTaskButton",editTaskButton);
 		}
+		//додамо посилання на подачу заявки на виконання завдання,
+	    //якщо залогований користувач має на це право
+				if(getCurrentLogedUser().getId()!=task.getBossId()&&task.getWorkerId()==0){
+				   String takeTaskButton = "<a href=\"take/"+taskId+"\"> Виконати</a>";
+				   modelAndView.addObject("takeTaskButton",takeTaskButton);
+				}
 		return modelAndView;
 
 	}
@@ -142,5 +148,17 @@ public class TaskController extends MainController {
 		taskService.updateTask(curTask);
 
 		return new ModelAndView("redirect:/task/" + taskId);
+	}
+	@RequestMapping(value = "/task/take/{taskId}", method = RequestMethod.GET)
+	public ModelAndView takeTask(
+			@PathVariable("taskId") Integer taskId) {
+		
+		Task task=taskService.getTaskById(taskId);
+		if(getCurrentLogedUser().getId()!=task.getBossId()&&task.getWorkerId()==0){
+	     
+			return new ModelAndView("/task/"+taskId);
+		}
+		else
+		return new ModelAndView("error403");
 	}
 }

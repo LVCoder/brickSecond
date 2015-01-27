@@ -3,6 +3,7 @@ package com.pmi.brick.web;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,7 +112,9 @@ public class HomeController extends MainController {
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String editUserData(@ModelAttribute("user") User user,
-			BindingResult result, HttpServletResponse response) throws EmailAlreadyExistsException {
+			@RequestParam("file") MultipartFile file,
+			BindingResult result, 
+			HttpServletResponse response) throws EmailAlreadyExistsException, IOException {
 		
 		//дописати перевірку на вже існуючий email. 
 		
@@ -119,10 +122,31 @@ public class HomeController extends MainController {
 		CurrentLogedUser.setSurname(user.getSurname());
 		CurrentLogedUser.setPhone(user.getPhone());
 		CurrentLogedUser.setEmail(user.getEmail());
-		  
+		
 				
 		userService.updateUser(CurrentLogedUser);
 
+		//завантаження фото
+		String name=Integer.toString(CurrentLogedUser.getId())+".jpg";
+		 byte[] bytes = file.getBytes();
+		 
+         // Creating the directory to store file
+         String rootPath = System.getProperty("catalina.home");
+         File dir = new File(rootPath + File.separator + "resources");
+         if (!dir.exists())
+             dir.mkdirs();
+
+         // Create the file on server
+         File serverFile = new File(dir.getAbsolutePath()
+                 + File.separator + name);
+         BufferedOutputStream stream = new BufferedOutputStream(
+                 new FileOutputStream(serverFile));
+         stream.write(bytes);
+         stream.close();
+
+       
+
+       
 		System.out.println("Update User Data");
 		
 
@@ -137,16 +161,15 @@ public class HomeController extends MainController {
 	   
 	 @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	    public @ResponseBody
-	    String uploadFileHandler(@RequestParam("name") String name,
-	            @RequestParam("file") MultipartFile file) {
+	    ModelAndView uploadFileHandler(@RequestParam("name") String name,
+	            @RequestParam("file") MultipartFile file) throws IOException {
 	 
-	        if (!file.isEmpty()) {
-	            try {
+	    
 	                byte[] bytes = file.getBytes();
 	 
 	                // Creating the directory to store file
 	                String rootPath = System.getProperty("catalina.home");
-	                File dir = new File(rootPath + File.separator + "tmpFiles");
+	                File dir = new File(rootPath + File.separator + "resources");
 	                if (!dir.exists())
 	                    dir.mkdirs();
 	 
@@ -157,17 +180,13 @@ public class HomeController extends MainController {
 	                        new FileOutputStream(serverFile));
 	                stream.write(bytes);
 	                stream.close();
-	 
+	   ModelAndView modelAndView = new ModelAndView();
+	   modelAndView.setViewName("photo");
+	   modelAndView.addObject("imageName", name);
 	              
 	 
-	                return "You successfully uploaded file=" + name;
-	            } catch (Exception e) {
-	                return "You failed to upload " + name + " => " + e.getMessage();
-	            }
-	        } else {
-	            return "You failed to upload " + name
-	                    + " because the file was empty.";
-	        }
+	                return modelAndView;
+	           
 	    }
 	@RequestMapping(value = "getRandom",method = RequestMethod.GET)
 	public @ResponseBody String getRandom(){

@@ -1,6 +1,6 @@
  *{ 
     margin:0; 
-    padding:0; 
+     
     } 
 	@font-face {
     font-family: Max; /* Гарнитура шрифта */
@@ -663,4 +663,30 @@ margin-top:40px;
 #choice{
 margin-left:85px;
 margin-top:130px;
+}
+
+#menuItems {
+	display: inline-block;
+  
+}
+#menuItems a{
+	
+	margin-left:50%;
+	display: inline-block;
+	  color:black;
+	  
+}
+#menuItems a:HOVER{
+	
+	margin-left:50%;
+	display: inline-block;
+	  color:#335ff7;
+	  
+}
+#menuItems a:AFTER{
+	
+	margin-left:50%;
+	display: inline-block;
+	  color:#335ff7;
+	  
 }

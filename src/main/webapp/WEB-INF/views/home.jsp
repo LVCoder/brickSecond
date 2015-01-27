@@ -4,7 +4,8 @@
    <%@ page import="com.pmi.brick.domain.User" %>
     <%@ page import="java.io.*,java.util.*" %>
 
-
+<link rel="stylesheet" type="text/css"
+	href="<c:url value="/resources/css/stylehome.css" />">
 <% User user=new User();
 user=(User)request.getAttribute("current_user");
 
@@ -27,7 +28,7 @@ user=(User)request.getAttribute("current_user");
 
 		<div id="middle">
 			<div id="ava">
-				<img src="<c:url value="/resources/images/rondo1.jpg"/>">
+				<img src="<c:url value="/files/${current_user.getId()}.jpg"/>">
 
 
 				<p><%=user.getName()%>  <%=user.getSurname() %> <%=user.getGender().name() %></p>
@@ -41,26 +42,23 @@ user=(User)request.getAttribute("current_user");
 			</div>
 			<div id="middleR">
 				<p>
-					На сайті: <span> 19 міс</span>
+					На сайті: <span></span>
 				</p>
 				<p>
-					Виконаних завдань: <span> </span>
+					Виконаних завдань: <span></span>
 				</p>
 				<p>
-					Рік народження: <span> 1995</span>
+					Рік народження: <span> ${current_user.getDob().getYear()}</span>
 				</p>
 				<p>
-					Місто: <span> Пустомити</span>
+					Місто: <span> ${current_user.getCity()}</span>
 				</p>
-				<p>Телефон:
+				<p>Телефон:<span> ${current_user.getPhone()}</span>
 				<p>
 					Категорії завдань: <span> переклад, допомога з ПК, доставка</span>
 				</p>
 				<p>
-					Про себе: <span> Молодий не жонатий студент з великою
-						фантазією і мріями. Вкрай відповідальний і пунктуальний. Можете на
-						мене розраховувати! Часами надто амбітний, тому можу виконувати
-						роботу дуже довго але досконало. </span>
+					Про себе: <span> ${current_user.getAboutUser()} </span>
 				</p>
 
 			</div>

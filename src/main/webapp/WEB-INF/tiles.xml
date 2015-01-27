@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd"> 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 	<definition name="baseLayout" template="/WEB-INF/views/page/layout.jsp">
-		
+
 		<put-attribute name="header" value="/WEB-INF/views/page/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/page/footer.jsp" />
 	</definition>
+	<definition name="index" template="/WEB-INF/views/index.jsp">
+
+	</definition>
 
 	<definition name="home" extends="baseLayout">
-	
+
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
 	<definition name="admin" extends="baseLayout">
-	
+
 		<put-attribute name="body" value="/WEB-INF/views/admin.jsp" />
+	</definition>
+	<definition name="task" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/task.jsp" />
+	</definition>
+
+	<definition name="task/editTask" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/views/task/editTask.jsp" />
+	</definition>
+
+	<definition name="createTask" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/task/createTask.jsp" />
+	</definition>
+	<definition name="customLogin" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/customLogin.jsp" />
+	</definition>
+
+	<definition name="registration/emailConfirmation" extends="baseLayout">
+
+		<put-attribute name="body"
+			value="/WEB-INF/views/registration/emailConfirmation.jsp" />
+	</definition>
+	<definition name="reg" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/reg.jsp" />
+	</definition>
+	<definition name="task/avaibleTask" extends="baseLayout">
+
+		<put-attribute name="body"
+			value="/WEB-INF/views/task/avaibleTask.jsp" />
+	</definition>
+	<definition name="upload" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/upload.jsp" />
+	</definition>
+	<definition name="photo" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/photo.jsp" />
+	</definition>
+
+	<definition name="editProfil" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/editProfil.jsp" />
 	</definition>
 </tiles-definitions>

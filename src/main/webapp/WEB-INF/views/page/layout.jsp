@@ -7,8 +7,7 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/resources/css/style.css" />">
-	<link rel="stylesheet" type="text/css"
-	href="<c:url value="/resources/css/stylehome.css" />">
+	
 
 <link rel="shortcut icon" href="<c:url value="/resources/favico.png"/>"
 	type="image/x-icon">
@@ -20,7 +19,7 @@
 <script src="<c:url value="/resources/js/script.js"/>"
 	type="text/javascript"></script>
 </head>
-<body>
+  <body id="regbody">
 
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="body" />
