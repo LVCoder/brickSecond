@@ -87,7 +87,7 @@ public class User {
 	}
 
 	public enum Gender {
-	    Male, Female
+	    Male, Female ,Unknown
 	}
 
 	public boolean getEnabled() {

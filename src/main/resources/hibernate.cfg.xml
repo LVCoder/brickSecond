@@ -7,5 +7,7 @@
 	<session-factory>
 		<mapping class="com.pmi.brick.domain.User" />
 			<mapping class="com.pmi.brick.domain.Task" />
+			<mapping class="com.pmi.brick.domain.TaskRequest" />
+			
 	</session-factory>
 </hibernate-configuration>

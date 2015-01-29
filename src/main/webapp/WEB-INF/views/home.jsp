@@ -31,7 +31,7 @@ user=(User)request.getAttribute("current_user");
 				<img src="<c:url value="/files/${current_user.getId()}.jpg"/>">
 
 
-				<p><%=user.getName()%>  <%=user.getSurname() %> <%=user.getGender().name() %></p>
+				<p><%=user.getName()%>  <%=user.getSurname() %> </p>
 				<div id="stars">
 					<img src="<c:url value="/resources/images/stars.png"/>"> <img
 						src="<c:url value="/resources/images/stars.png"/>"> <img

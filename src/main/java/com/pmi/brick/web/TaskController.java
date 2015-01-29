@@ -29,8 +29,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pmi.brick.dao.UserDao;
 import com.pmi.brick.dao.UserDaoImpl;
 import com.pmi.brick.domain.Task;
+import com.pmi.brick.domain.TaskRequest;
 import com.pmi.brick.domain.User;
 import com.pmi.brick.exception.EmailAlreadyExistsException;
+import com.pmi.brick.service.TaskRequestService;
 import com.pmi.brick.service.TaskService;
 import com.pmi.brick.service.TaskServiceImpl;
 import com.pmi.brick.service.UserService;
@@ -41,6 +43,8 @@ public class TaskController extends MainController {
 
 	@Autowired
 	TaskService taskService;
+	@Autowired
+	TaskRequestService taskRequestService;
 
 	@RequestMapping(value = "/task/{taskId}", method = RequestMethod.GET)
 	public ModelAndView showTaskById(@PathVariable("taskId") Integer taskId) {
@@ -155,8 +159,16 @@ public class TaskController extends MainController {
 		
 		Task task=taskService.getTaskById(taskId);
 		if(getCurrentLogedUser().getId()!=task.getBossId()&&task.getWorkerId()==0){
-	     
-			return new ModelAndView("/task/"+taskId);
+	        TaskRequest taskRequest =new TaskRequest();
+	        taskRequest.setDate(new Date());
+            taskRequest.setTaskId(taskId);
+            taskRequest.setWorkerId(getCurrentLogedUser().getId());
+            taskRequestService.saveTaskRequest(taskRequest);
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.setViewName("task");
+            modelAndView.addObject("currentTask", taskService.getTaskById(taskId));
+            modelAndView.addObject("requestMessage", "Ви подали заявку на виконання цього завдання");
+			return modelAndView;
 		}
 		else
 		return new ModelAndView("error403");

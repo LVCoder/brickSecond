@@ -1,5 +1,8 @@
 package com.pmi.brick.web;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
@@ -73,7 +76,7 @@ User user=getCurrentLogedUser();
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView saveUserData(@ModelAttribute("user") User user,
-			BindingResult result, HttpServletResponse response) throws EmailAlreadyExistsException {
+			BindingResult result, HttpServletResponse response) throws EmailAlreadyExistsException, NoSuchAlgorithmException {
 		
 		if(userService.checkEmail(user.getEmail())==false){
 			
@@ -84,16 +87,25 @@ User user=getCurrentLogedUser();
 		  String to = "lemberg.ukraine@gmail.com";
 	      String from = "nazar.gembara@gmail.com";
 int rand=new Random().nextInt();
-rand=Math.abs(rand%10000);
+rand=Math.abs(rand%10000);   //рандомний код, для підвердження email
 user.setConfirmCode(Integer.toString(rand));
 user.setEnabled(true);
+//хешування паролю, MD5
+MessageDigest messageDigest = MessageDigest.getInstance("MD5");  
+messageDigest.update(user.getPassword().getBytes(),0, user.getPassword().length());  
+String hashedPass = new BigInteger(1,messageDigest.digest()).toString(16);  
+if (hashedPass.length() < 32) {
+   hashedPass = "0" + hashedPass; 
+}
+logoutCurrentUser();
+authenticateUser(user); //аутентифікуєм юзера до хешування паролю
+user.setPassword(hashedPass);
 userService.addUser(user);
 
 	      Sender sender=new Sender(from,"CaliforniaLove1488"); //username(email) and password.
 	      sender.send("Email confirmation", "<h1>Hello "+user.getName()+",</h1> <p>here is your confirmation number. Go to the email confirmation and input this number there</p>  <h2> "+rand+"</h2>", from, to);
 		System.out.println("Save User Data");
-		logoutCurrentUser();
-		authenticateUser(user);
+		
 
 		return new ModelAndView("redirect:/home");
 	}
@@ -118,7 +130,9 @@ userService.addUser(user);
  
 	
 	public void authenticateUser(User user) {
+		System.out.println("authentificate user");
 		SecurityContextHolder.getContext().setAuthentication(
+					
 				new UsernamePasswordAuthenticationToken(user.getEmail(), user
 						.getPassword()));
 	}

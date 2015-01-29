@@ -2,6 +2,7 @@ package com.pmi.brick.web;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -11,9 +12,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,7 @@ public class HomeController extends MainController {
 		if(CurrentLogedUser!=null)
 			return "redirect:/home";
 		return "index";
+		
 		
 	}
 
@@ -144,8 +148,7 @@ public class HomeController extends MainController {
          stream.write(bytes);
          stream.close();
 
-       
-
+      
        
 		System.out.println("Update User Data");
 		
@@ -189,11 +192,15 @@ public class HomeController extends MainController {
 	           
 	    }
 	@RequestMapping(value = "getRandom",method = RequestMethod.GET)
-	public @ResponseBody String getRandom(){
-		Random r = new Random();
-		String val = "Random:"+r.nextFloat()+"On:"+new Date().toString();
-		return val;
+	public @ResponseBody void getRandom(HttpServletResponse response) throws IOException{
+		//Random r = new Random();
+		//String val = "Random:"+r.nextFloat()+"On:"+new Date().toString();
+		//return val;
+		FileInputStream fis = new FileInputStream("C://Users/User/Desktop/1.jpg");
 		
+		 ServletOutputStream s = response.getOutputStream();
+		 response.addHeader("Content-Type", "image/jpeg");
+		 s.write(IOUtils.toByteArray(fis));
 	}
 	
 }
