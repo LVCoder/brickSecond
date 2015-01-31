@@ -63,4 +63,16 @@
 
 		<put-attribute name="body" value="/WEB-INF/views/editProfil.jsp" />
 	</definition>
+	<definition name="forgotPassword" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/forgotPassword.jsp" />
+	</definition>
+	<definition name="sendEnding" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/sendEnding.jsp" />
+	</definition>
+		<definition name="newPassword" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/newPassword.jsp" />
+	</definition>
 </tiles-definitions>

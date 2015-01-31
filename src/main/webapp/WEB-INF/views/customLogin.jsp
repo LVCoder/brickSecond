@@ -52,6 +52,7 @@
 				<button type="submit" id="ssubmit" onclick="validate(this.form)">Увійти</button>
 			</fieldset>
 		</form>
+		<a href="forgotPassword">Забули пароль</a>
 </div>
 	
 	

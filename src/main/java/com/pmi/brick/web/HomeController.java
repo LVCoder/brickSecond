@@ -36,11 +36,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pmi.brick.dao.ForgotenPasswordDaoImpl;
 import com.pmi.brick.dao.UserDao;
 import com.pmi.brick.dao.UserDaoImpl;
 import com.pmi.brick.domain.Task;
 import com.pmi.brick.domain.User;
 import com.pmi.brick.exception.EmailAlreadyExistsException;
+import com.pmi.brick.service.ForgotenPasswordService;
 import com.pmi.brick.service.UserService;
 import com.pmi.brick.service.UserServiceImpl;
 
@@ -57,10 +59,11 @@ public class HomeController extends MainController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	
-
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-
+         
+     
 		if(CurrentLogedUser!=null)
 			return "redirect:/home";
 		return "index";
