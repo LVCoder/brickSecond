@@ -11,7 +11,7 @@ public interface TaskRequestService {
 	public List<TaskRequest> getTaskRequstsByWorkerId(int workerId);
 	public List<TaskRequest> getTaskRequestsByTaskId(int taskId);
 	public TaskRequest getTaskRequestById(int id);
-	
-
+	public boolean checkIfRequestFromUserExist(int userId,int taskId);
+    public TaskRequest getTaskRequestByTaskIdAndUserId(int userId,int taskId);
 
 }

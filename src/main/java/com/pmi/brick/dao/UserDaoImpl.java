@@ -105,7 +105,8 @@ public class UserDaoImpl implements UserDao {
 
 		Criteria cr = session.createCriteria(User.class);
 		cr.add(Restrictions.eq("email", email));
-		List<User> results = cr.list();
+		@SuppressWarnings("unchecked")
+		List<User> results = (List<User>)cr.list();
 		session.close();
 		if (results.isEmpty())
 			return user;

@@ -18,5 +18,7 @@ public interface TaskService {
 	
 	public Task getTaskById(int id);
 	
-	public List<Task> getAllAvaibleTasks();
+	public List<Task> getAllAvaibleTasks(int userId);
+	
+	public void setWorker(int taskId,int workerId) throws Exception;
 }

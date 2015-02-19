@@ -26,31 +26,28 @@
 
 	<form method="post" action="create">
 		<fieldset class="main">
-			<label for="_name">Назва: <span>*</span></label> <input type="text"
-				name="name" id="_name" required /> 
-				<label for="_surname">Категорія
-				<span>*</span>
-			</label> <input type="text" name="category" id="_surname"
-				 required /> 
-				 
-				 <label for="_surname">Початок
-				<span>*</span>
-			</label> <input type="text" name="startDate" id="_surname"
-				 required /> 
-				 <label for="_surname">Кінець
-				<span>*</span>
-			</label> <input type="text" name="endDate" id="_surname"
-				 required /> 
-				 <label for="_surname">Про завдання
-				<span>*</span>
-			</label> <input type="text" name="aboutText" id="_surname"
-				 required /> 
-				 <button type="submit" id="ssubmit" onclick="validate(this.form)">Створити</button>
-
-
-
-
+			<label for="_name">Назва: <span>*</span></label> 
+			<input type="text"	name="name" id="_name" required /> 
+			<label for="_surname">Категорія<span>*</span></label>
+			<select id="_name" name="category" required />
+			<option>Послуги домашнього майстра
+			<option>Сантехнічні роботи
+			<option>Електромонтажні роботи
+			<option>Ремонтні роботи
+			<option>Побутові послуги
+			<option>Клінігові компанії
+			<option>Ремонт побутової техніки
+			<option>Фото і відео
+			<option>Все для свята
+			<option>Перевезення
+			<option>Транспортні послуги </select> <label for="_surname">Початок
+					<span>*</span>
+				</label> <input type="text" name="startDate" id="_surname" required /> <label
+					for="_surname">Кінець <span>*</span>
+				</label> <input type="text" name="endDate" id="_surname" required /> <label
+					for="_surname">Про завдання <span>*</span>
+				</label> <input type="text" name="aboutText" id="_surname" required />
+				<button type="submit" id="ssubmit" onclick="validate(this.form)">Створити</button>
 		</fieldset>
-		
 </body>
 </html>

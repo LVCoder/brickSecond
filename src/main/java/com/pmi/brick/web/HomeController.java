@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -202,5 +203,10 @@ public class HomeController extends MainController {
 		 response.addHeader("Content-Type", "image/jpeg");
 		 s.write(IOUtils.toByteArray(fis));
 	}
-	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleException(Exception exception) {
+		ModelAndView modelAndView = new ModelAndView("reg");
+		modelAndView.addObject("errorMessage", "Сталась помилка "+exception.getMessage());
+		return modelAndView;
+	}
 }

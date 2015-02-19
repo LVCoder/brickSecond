@@ -1,5 +1,6 @@
 package com.pmi.brick.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.pmi.brick.domain.Task;
@@ -46,25 +47,26 @@ public class TaskDaoImpl implements TaskDao {
 
 		Criteria cr = session.createCriteria(Task.class);
 		cr.add(Restrictions.eq("id", id));
-		List results = cr.list();
+		List<Task> results = cr.list();
 		 session.close();
 		if (results.isEmpty())
 			return task;
 		else
-			task = (Task) results.get(0);
+			task = results.get(0);
 		
 		return task;
 	}
 	 
 	@Override
-	public List<Task> getAllAvaibleTasks(){
+	public List<Task> getAllAvaibleTasks(int userId){
 		Session session = null;
 
 		session = sessionFactory.openSession();
 
 		Criteria cr = session.createCriteria(Task.class);
-		cr.add(Restrictions.eq("status", "1"));
-		List<Task> results = cr.list();
+		cr.add(Restrictions.eq("status", Task.Status.Active));
+		cr.add(Restrictions.not(Restrictions.eq("bossId", userId)));
+		List<Task> results =  cr.list();
         session.close();
 		return results;
 		
