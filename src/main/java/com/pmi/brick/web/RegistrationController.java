@@ -32,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pmi.brick.domain.User;
 import com.pmi.brick.exception.EmailAlreadyExistsException;
 import com.pmi.brick.service.UserService;
+import com.pmi.brick.utils.Sender;
 import com.pmi.brick.exception.*;
 
 @Controller
@@ -124,7 +125,7 @@ userService.addUser(user);
 	@ExceptionHandler(Exception.class)
 	public ModelAndView handleException(Exception exception) {
 		ModelAndView modelAndView = new ModelAndView("reg");
-		modelAndView.addObject("errorMessage", "Сталась якась фігня "+exception.getMessage());
+		modelAndView.addObject("errorMessage", "Сталась помилка "+exception.getMessage());
 		return modelAndView;
 	}
  

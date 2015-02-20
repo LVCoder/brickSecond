@@ -76,4 +76,7 @@
 	<error-code>403</error-code>
 	<location>/WEB-INF/views/errors/error403.jsp</location>
   </error-page>
+  <session-config>
+    <session-timeout>10080</session-timeout>
+</session-config>
 </web-app>

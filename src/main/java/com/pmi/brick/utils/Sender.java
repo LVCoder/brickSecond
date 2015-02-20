@@ -1,4 +1,4 @@
-package com.pmi.brick.web;
+package com.pmi.brick.utils;
  
 import java.util.Properties;
  

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.pmi.brick.domain.ForgotenPassword;
 import com.pmi.brick.domain.User;
 import com.pmi.brick.service.ForgotenPasswordService;
+import com.pmi.brick.utils.Sender;
 @Controller
 public class NewPaswordController extends MainController{
 	@Autowired

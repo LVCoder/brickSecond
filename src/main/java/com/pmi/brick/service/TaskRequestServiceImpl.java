@@ -45,4 +45,30 @@ public class TaskRequestServiceImpl implements TaskRequestService {
 		return taskRequestDao.getTaskRequestById(id);
 	}
 
+	//метод повертає true якщо користувач відправляв запит на виконання завдання.
+	@Override
+	public boolean checkIfRequestFromUserExist(int userId,int taskId) {
+		List<TaskRequest> taskRequestsList=taskRequestDao.getTaskRequestsByTaskId(taskId);
+		for(TaskRequest taskRequest : taskRequestsList ){
+			if(taskRequest.getWorkerId()==userId){
+			return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	public TaskRequest getTaskRequestByTaskIdAndUserId(int userId, int taskId) {
+		List<TaskRequest> taskRequestsList=taskRequestDao.getTaskRequestsByTaskId(taskId);
+		for(TaskRequest taskRequest : taskRequestsList ){
+			if(taskRequest.getWorkerId()==userId){
+			return taskRequest;
+			}
+		}
+		
+		return null;
+		
+	}
+
 }

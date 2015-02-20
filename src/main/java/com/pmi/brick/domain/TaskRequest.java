@@ -6,9 +6,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.pmi.brick.domain.User.Gender;
 
 @Entity
 @Table(name="TASKREQUEST")
@@ -29,6 +33,18 @@ public class TaskRequest {
 	
 	@Column(name="text")
 	private String text;
+	
+	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 	public int getId() {
 		return id;
@@ -68,6 +84,13 @@ public class TaskRequest {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	public enum Status {
+	   InProcess,  // запит в≥дправлено
+	   Declined ,  // запит в≥дхилено роботодавцем
+	   Withdrew,   // запит в≥дкликано виконавцем
+	   Terminated  // час п≥дтвердженн€ вийшов, вибрано ≥ншого роботодавц€.           
 	}
 
 }

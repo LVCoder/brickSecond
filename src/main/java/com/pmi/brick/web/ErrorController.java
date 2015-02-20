@@ -48,5 +48,11 @@ public class ErrorController {
 		return "errors/error404";
 
 	}
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleException(Exception exception) {
+		ModelAndView modelAndView = new ModelAndView("reg");
+		modelAndView.addObject("errorMessage", "Сталась помилка "+exception.getMessage());
+		return modelAndView;
+	}
 
 }

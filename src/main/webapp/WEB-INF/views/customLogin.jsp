@@ -12,7 +12,11 @@
 		</a>
 		<h1 id="regh1">Вхід</h1>
 		<div id="imgblockReg">
-			<img src="<c:url value="/resources/images/VK.png"/>"> <img
+			
+			<a href="vklogin"> <img
+			src="<c:url value="/resources/images/VK.png"/>" >
+		</a>
+			 <img
 				src="<c:url value="/resources/images/GP.png"/>"> <img
 				src="<c:url value="/resources/images/FB.png"/>">
 

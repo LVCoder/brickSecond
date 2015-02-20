@@ -1,42 +1,26 @@
 package com.pmi.brick.web;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pmi.brick.dao.UserDao;
-import com.pmi.brick.dao.UserDaoImpl;
 import com.pmi.brick.domain.Task;
 import com.pmi.brick.domain.TaskRequest;
+import com.pmi.brick.domain.TaskRequest.Status;
 import com.pmi.brick.domain.User;
-import com.pmi.brick.exception.EmailAlreadyExistsException;
 import com.pmi.brick.service.TaskRequestService;
 import com.pmi.brick.service.TaskService;
-import com.pmi.brick.service.TaskServiceImpl;
-import com.pmi.brick.service.UserService;
-import com.pmi.brick.service.UserServiceImpl;
 
 @Controller
 public class TaskController extends MainController {
@@ -46,6 +30,10 @@ public class TaskController extends MainController {
 	@Autowired
 	TaskRequestService taskRequestService;
 
+	//перегляд сторінки завдання по ID 
+	//сторінка формуються в залежності від того хто її переглядає
+	//якщо переглядає BOSS то є можливість редагування, прийняття заявок на виконання та 
+	//відхилення заявок.
 	@RequestMapping(value = "/task/{taskId}", method = RequestMethod.GET)
 	public ModelAndView showTaskById(@PathVariable("taskId") Integer taskId) {
 
@@ -59,21 +47,96 @@ public class TaskController extends MainController {
 
 		modelAndView.addObject("currentTask", task);
 		modelAndView.addObject("boss", boss);
+		// незалежно від того хто переглядає сторінку, подаємо статус завдання
+		Task.Status taskStatus=task.getStatus();
+		 String taskStatusText = null;
+			switch(taskStatus){
+			case Active:
+				taskStatusText = "Активний";
+				break;
+			case InProcess:
+				taskStatusText = "Виконується";
+				break;
+			case Done:
+				taskStatusText = "Виконано";
+				break;
+			case Deleted:
+				taskStatusText = "Видалено";
+				break;
+			default:
+				break;
+			}
+			 modelAndView.addObject("taskStatusText",taskStatusText);
 		//додамо посилання на редагування завдання, якщо залогований користувач є роботодавцем
 		if(getCurrentLogedUser().getId()==task.getBossId()){
 		   String editTaskButton = "<a href=\"edit/"+taskId+"\"> Редагувати</a>";
 		   modelAndView.addObject("editTaskButton",editTaskButton);
+		   modelAndView.addObject("taskRequestsList",taskRequestService.getTaskRequestsByTaskId(taskId));
+		   //якщо виконевець ще не вибраний
+		   if(task.getWorkerId()==0){
+			   Map<TaskRequest, User> map=new LinkedHashMap<TaskRequest, User>();
+			  List<TaskRequest> list=taskRequestService.getTaskRequestsByTaskId(taskId);
+			  for(TaskRequest taskRequest : list){
+			   User worker=userService.getUserById(taskRequest.getWorkerId());
+				  map.put(taskRequest,worker);
+			  }
+				  modelAndView.addObject("taskRequestAndWorkersMap",map);
+			 
+			  
+			   
+		   }
+		   //якщо виконавець уже вибраний.
+		   else
+		   {
+			   User worker=new User();
+			   worker= userService.getUserById(task.getWorkerId());
+			   modelAndView.addObject("worker",worker);
+		   }
 		}
+		//в іншому випадку
+		//додамо інформацію про статус запиту, якщо користувач відправив його
+		else{
+				if(taskRequestService.getTaskRequestByTaskIdAndUserId(getCurrentLogedUser().getId(), taskId)!=null ){
+				Status status=taskRequestService.getTaskRequestByTaskIdAndUserId(getCurrentLogedUser().getId(), taskId).getStatus();
+				 String requestStatusText = null;
+				switch(status){
+				case Declined:
+					requestStatusText = "Роботодавець відхилив вашу заявку.";
+					break;
+				case InProcess:
+					requestStatusText = "Ви уже подали заявку на виконання завдання.";
+					break;
+				case Terminated:
+					requestStatusText = "На жаль, це завдання уже виконує інший виконавець.";
+					break;
+				case Withdrew:
+					requestStatusText = "Ви відкликали свою заявку на виконання";
+					break;
+				default:
+					break;
+					
+					
+					
+					}
+			
+				   modelAndView.addObject("requestStatusText",requestStatusText);
+				}
+				
+				else{
 		//додамо посилання на подачу заявки на виконання завдання,
-	    //якщо залогований користувач має на це право
+	    //якщо залогований користувач має на це право і не відправляв заявок
 				if(getCurrentLogedUser().getId()!=task.getBossId()&&task.getWorkerId()==0){
 				   String takeTaskButton = "<a href=\"take/"+taskId+"\"> Виконати</a>";
 				   modelAndView.addObject("takeTaskButton",takeTaskButton);
 				}
+				}
+	
+		}
 		return modelAndView;
 
 	}
 
+	// форма створення завдання
 	@RequestMapping(value = "/task/create", method = RequestMethod.GET)
 	public ModelAndView showCreateTaskForm() {
 
@@ -84,6 +147,7 @@ public class TaskController extends MainController {
 
 	}
 
+	//відсилання форми створення завдання
 	@RequestMapping(value = "/task/create", method = RequestMethod.POST)
 	public String createTaskFromForm(@ModelAttribute("task") Task task) {
 
@@ -91,13 +155,14 @@ public class TaskController extends MainController {
 
 		task.setBossId(getCurrentLogedUser().getId());
 		task.setPostDate(dateobj);
-		task.setStatus("1");
+		task.setStatus(Task.Status.Active);
 		taskService.addTask(task);
 
 		return "redirect:/task/" + task.getId();
 
 	}
 
+	//перегляд усіх доступних завдання, переадресація на 1-шу сторінку зі списку
 	@RequestMapping(value = "/task/avaible", method = RequestMethod.GET)
 	public ModelAndView showAvaibleTasks() {
 
@@ -105,14 +170,15 @@ public class TaskController extends MainController {
 
 	}
 
+	//перегляд доступних для виконання завдань за номером сторінки
 	@RequestMapping(value = "/task/avaible/{pageNumber}", method = RequestMethod.GET)
 	public ModelAndView showAllAvaibleTasks(
 			@PathVariable("pageNumber") int pageNumber) {
 
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("task/avaibleTasks");
-		Map map = new HashMap();
-		List<Task> tasks = taskService.getAllAvaibleTasks();
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Task> tasks = taskService.getAllAvaibleTasks(getCurrentLogedUser().getId());
 		int pagesCount = tasks.size() / 10 + 1; // count of pages with tasks (10
 												// tasks on 1 page)
 		map.put("taskObj", tasks);
@@ -122,6 +188,8 @@ public class TaskController extends MainController {
 
 	}
 
+	
+	//редагування завдання по його ID, якщо користувач має на це право
 	@RequestMapping(value = "/task/edit/{taskId}", method = RequestMethod.GET)
 	public ModelAndView createEditTaskForm(@PathVariable("taskId") int taskId) {
 
@@ -142,6 +210,7 @@ public class TaskController extends MainController {
 		}
 	}
 
+	//відправлення форми редагування завдання
 	@RequestMapping(value = "/task/edit/{taskId}", method = RequestMethod.POST)
 	public ModelAndView editTaskFromForm(
 			@PathVariable("taskId") Integer taskId,
@@ -163,6 +232,7 @@ public class TaskController extends MainController {
 	        taskRequest.setDate(new Date());
             taskRequest.setTaskId(taskId);
             taskRequest.setWorkerId(getCurrentLogedUser().getId());
+            taskRequest.setStatus(Status.InProcess);
             taskRequestService.saveTaskRequest(taskRequest);
             ModelAndView modelAndView=new ModelAndView();
             modelAndView.setViewName("task");
@@ -173,4 +243,12 @@ public class TaskController extends MainController {
 		else
 		return new ModelAndView("error403");
 	}
+	
+	@RequestMapping(value = "/task/setWorker/{taskId}/{workerId}",method=RequestMethod.GET)
+	public  ModelAndView setWorker(@PathVariable("taskId") Integer taskId,@PathVariable("workerId") Integer workerId) throws Exception{
+		
+		taskService.setWorker(taskId.intValue(), workerId.intValue());
+		return new ModelAndView("redirect:/task/"+taskId);
+	}
+	
 }

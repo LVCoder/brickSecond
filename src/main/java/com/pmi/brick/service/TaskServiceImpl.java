@@ -33,10 +33,10 @@ public class TaskServiceImpl implements TaskService {
 	}
 	
 	@Override
-	public List<Task> getAllAvaibleTasks(){
+	public List<Task> getAllAvaibleTasks(int userId){
 		
 		
-		return taskDao.getAllAvaibleTasks();
+		return taskDao.getAllAvaibleTasks(userId);
 		
 	}
 
@@ -44,6 +44,19 @@ public class TaskServiceImpl implements TaskService {
 	public void updateTask(Task task) {
     
 		taskDao.updateTask(task);
+	
+	}
+
+
+	public void setWorker(int taskId, int workerId) throws Exception {
+		Task task=new Task();
+		task=taskDao.getTaskById(taskId);
+		if(task.getWorkerId()==0){
+		task.setWorkerId(workerId);
+		task.setStatus(Task.Status.InProcess);
+		taskDao.updateTask(task);
+		}
+		else throw new Exception("Worker is already setted");
 	}
 
 }
