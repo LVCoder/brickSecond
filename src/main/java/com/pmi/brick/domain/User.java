@@ -18,6 +18,7 @@ public class User {
 
 
 	public User(){
+		socialId="none";
 		
 	}
 	
@@ -69,6 +70,8 @@ public class User {
 	@Column(name = "sex")
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+	@Column(name = "social_id")
+	private String socialId;
 	
 	public boolean getIsEmailConfirm() {
 		return isEmailConfirm;
@@ -194,6 +197,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getSocialId() {
+		return socialId;
+	}
+
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
 	}
 
 	

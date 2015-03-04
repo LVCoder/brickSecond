@@ -133,4 +133,26 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	@Override
+	public User getUserBySocialId(String socialId) {
+		User user = new User();
+
+		Session session = null;
+
+		session = sessionFactory.openSession();
+
+		Criteria cr = session.createCriteria(User.class);
+		cr.add(Restrictions.eq("socialId", socialId));
+		@SuppressWarnings("unchecked")
+		List<User> results = (List<User>)cr.list();
+		session.close();
+		
+		if (results.isEmpty())
+			return null;
+		else
+			user = results.get(0);
+
+		return user;
+	}
+
 }

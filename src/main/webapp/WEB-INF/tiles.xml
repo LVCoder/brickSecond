@@ -75,4 +75,9 @@
 
 		<put-attribute name="body" value="/WEB-INF/views/newPassword.jsp" />
 	</definition>
+	
+		<definition name="socreg" extends="baseLayout">
+
+		<put-attribute name="body" value="/WEB-INF/views/socreg.jsp" />
+	</definition>
 </tiles-definitions>
