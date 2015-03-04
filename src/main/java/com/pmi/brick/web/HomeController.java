@@ -197,9 +197,6 @@ public class HomeController extends MainController {
 	    }
 	@RequestMapping(value = "getRandom",method = RequestMethod.GET)
 	public @ResponseBody void getRandom(HttpServletResponse response) throws IOException{
-		//Random r = new Random();
-		//String val = "Random:"+r.nextFloat()+"On:"+new Date().toString();
-		//return val;
 		FileInputStream fis = new FileInputStream("C://Users/User/Desktop/1.jpg");
 		
 		 ServletOutputStream s = response.getOutputStream();

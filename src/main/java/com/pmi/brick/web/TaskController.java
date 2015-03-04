@@ -112,6 +112,9 @@ public class TaskController extends MainController {
 				case Withdrew:
 					requestStatusText = "Ви відкликали свою заявку на виконання";
 					break;
+				case Submited:
+					requestStatusText= "Вашу заявку підверджено.";
+					break;
 				default:
 					break;
 					
@@ -187,7 +190,34 @@ public class TaskController extends MainController {
 		return new ModelAndView("task/avaibleTask", map);
 
 	}
+	//перегляд усіх створених мною, переадресація на 1-шу сторінку зі списку
+		@RequestMapping(value = "/task/myTasks", method = RequestMethod.GET)
+		public ModelAndView showMyTasksFirstPage() {
 
+			return new ModelAndView("redirect:/task/myTasks/1");
+
+		}
+
+	//перегляд всіх створених мною завдань
+	@RequestMapping(value = "/task/myTasks/{pageNumber}", method = RequestMethod.GET)
+	public ModelAndView showAllMyTasks(
+			@PathVariable("pageNumber") int pageNumber) {
+
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("task/avaibleTasks");
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Task> tasks = taskService.getAllMyBossTasks(getCurrentLogedUser().getId());
+		int pagesCount = tasks.size() / 10 + 1; // count of pages with tasks (10
+												// tasks on 1 page)
+		map.put("taskObj", tasks);
+		map.put("pagesCount", pagesCount);
+		map.put("thisPageNumber", pageNumber);
+		return new ModelAndView("task/avaibleTask", map);
+
+	}
+
+
+	
 	
 	//редагування завдання по його ID, якщо користувач має на це право
 	@RequestMapping(value = "/task/edit/{taskId}", method = RequestMethod.GET)
@@ -246,9 +276,14 @@ public class TaskController extends MainController {
 	
 	@RequestMapping(value = "/task/setWorker/{taskId}/{workerId}",method=RequestMethod.GET)
 	public  ModelAndView setWorker(@PathVariable("taskId") Integer taskId,@PathVariable("workerId") Integer workerId) throws Exception{
-		
+		Task task=new Task();
+		task=taskService.getTaskById(taskId);
+		if(task.getBossId()==getCurrentLogedUser().getId()){
 		taskService.setWorker(taskId.intValue(), workerId.intValue());
-		return new ModelAndView("redirect:/task/"+taskId);
+		return new ModelAndView("redirect:/task/"+taskId);}
+		else
+			return new ModelAndView("redirect:/errors/error404");
+		
 	}
 	
 }

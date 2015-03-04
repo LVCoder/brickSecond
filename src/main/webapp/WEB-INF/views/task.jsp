@@ -69,6 +69,7 @@ ${dd:formatDate(currentTask.endDate)}
 </c:if>
 <a href="/brick/home">Головна</a>
 <a href="avaible">Усі завдання</a>
+<a href="myTasks">Мої завдання</a>
 <a href="create">Додати завдання</a> ${editTaskButton} ${takeTaskButton}
 ${requestMessage} ${requestStatusText}
 

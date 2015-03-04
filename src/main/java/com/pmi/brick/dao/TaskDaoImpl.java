@@ -71,6 +71,33 @@ public class TaskDaoImpl implements TaskDao {
 		return results;
 		
 	}
+
+	@Override
+	public List<Task> getAllMyBossTasks(int userId) {
+		Session session = null;
+
+		session = sessionFactory.openSession();
+
+		Criteria cr = session.createCriteria(Task.class);
+		cr.add(Restrictions.eq("bossId", userId));
+		List<Task> results =  cr.list();
+        session.close();
+		return results;
+	}
+
+	@Override
+	public List<Task> getAllMyWorkerTasks(int userId) {
+		Session session = null;
+
+		session = sessionFactory.openSession();
+
+		Criteria cr = session.createCriteria(Task.class);
+		cr.add(Restrictions.eq("workerId", userId));
+		List<Task> results =  cr.list();
+        session.close();
+		return results;
+
+	}
 	
 
 }
