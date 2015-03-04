@@ -155,4 +155,26 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public boolean checkEmailForForgotenPassword(String email) {
+		Session session = null;
+
+		session = sessionFactory.openSession();
+
+		Criteria cr = session.createCriteria(User.class);
+		cr.add(Restrictions.eq("email", email));
+		List<User> results = cr.list();
+
+		session.close();
+		if (results.isEmpty())
+
+			return false;
+
+		else if (!results.get(0).getSocialId().equals("none"))
+
+			return false;
+
+		return true;
+	}
+
 }

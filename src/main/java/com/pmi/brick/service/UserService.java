@@ -12,7 +12,7 @@ public interface UserService {
 
 	public boolean checkEmail(String email); // returns FALSE if already exist,
 												// and TRUE if not.
-
+	public boolean checkEmailForForgotenPassword(String email); 
 	public int getUserIdByEmail(String email);
 
 	public List<User> getUser();

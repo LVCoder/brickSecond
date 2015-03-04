@@ -35,4 +35,7 @@ public class ForgotenPasswordServiceImpl implements ForgotenPasswordService {
 		fpDao.delete(forgotenPassword);
 	}
 
+
+
+
 }

@@ -42,8 +42,8 @@ public class NewPaswordController extends MainController{
        
 
 
-	if (userService.getUserIdByEmail(email)!=-1)
-	{
+	if (userService.checkEmailForForgotenPassword(email))
+	{ 
 		User user=userService.getUserByEmail(email);
 	    ForgotenPassword forgotenPassword= new ForgotenPassword();
 	    forgotenPassword.setUser_id(user.getId());

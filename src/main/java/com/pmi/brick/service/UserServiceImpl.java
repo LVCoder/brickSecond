@@ -73,4 +73,10 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public boolean checkEmailForForgotenPassword(String email) {
+		
+		return userDao.checkEmailForForgotenPassword(email);
+	}
+
 }

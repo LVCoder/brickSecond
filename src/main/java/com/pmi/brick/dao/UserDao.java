@@ -22,6 +22,7 @@ public interface UserDao {
 	public List<User> getUser();
 
 	public boolean checkEmail(String email);
+	public boolean checkEmailForForgotenPassword(String email);
 	
 	public User getUserBySocialId(String socialId);
 
